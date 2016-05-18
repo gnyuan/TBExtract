@@ -1,19 +1,16 @@
-TBBKAnalysis
+TBExtract
 ============
 
-这个repository最初是源于我在知乎上一个问题的回答（[http://www.zhihu.com/question/24368542/answer/27579662](http://www.zhihu.com/question/24368542/answer/27579662 "回答问题的链接")），涉及了两个方面：数据抓取和数据分析。
+这个项目主要用来抓取淘宝的数据。分为以下几个步骤
 
-###数据爬取
-+ 爬取对象：淘宝“连衣裙 夏”的搜索结果。爬取对象的选择分析我在文章中也有提及。
-+ 工具：Scrapy。Repository内容即为当时实现的代码。
+###数据选择
+抓取商铺信息，例如[这个入口](https://shopsearch.taobao.com/search?app=shopsearch&initiative_id=staobaoz_20120515&q=abc&s=0),从里面提取店铺的名称、ID、昵称等。
 
-###数据分析
-+ 分析内容可见此Repository的[Wiki](https://github.com/younghz/TBBKAnalysis/wiki)。也可见上面问题链接。
-+ 工具：ipython & matplotlib。
+###XPATH分析
+使用Chrome、XPATHhelper等工具获得所要提取目标的位置。(这时最关键的一步，分析目标值所在位置)
 
-###分析内容
-分析内容放在了[Wiki](https://github.com/younghz/TBBKAnalysis/wiki)中，链接：[https://github.com/younghz/TBBKAnalysis/wiki](https://github.com/younghz/TBBKAnalysis/wiki)    
+###提取内容
+用Scrapy的流程来提取目标值。
 
-###注意
-如果Wiki中图片不能正常显示，请使用较高版本的Chrome打开。
-
+###使用方法
+scrapy crawl TBSpider
