@@ -16,9 +16,10 @@ class TBSpider(Spider):
     name = "TBSpider"
     download_delay = 4
     allowed_domains = ["taobao.com"]
-    start_urls = [
-        url
-        ]
+    # start_urls = [
+    #     url
+    #     ]
+    start_urls = [ url+'&s='+str(pagenum) for pagenum in range(0, 401, 20) ]
 
     def parse(self, response):
         sel = Selector(response)
@@ -31,14 +32,21 @@ class TBSpider(Spider):
 
         for shop in shops:
             item = TBExtractItem()
-            print "*************shop in shops******************"
             item['nick'] = shop['nick'].encode('UTF-8')
             item['uid'] = shop['uid'].encode('UTF-8')
             item['title'] = shop['title'].encode('UTF-8')
             item['shopUrl'] = shop['shopUrl'].encode('UTF-8')
+            item['setupdate'] = 'xxxxx'
+            # yield item
+            request = Request('https:'+ item['shopUrl'], callback=self.parse_shop)
+            request.meta['item'] = item 
+            yield request
 
-            yield item
-
-        for pagenum in range(20,201,20):
-            print "URL = " + url+"&s="+str(pagenum)
-            yield Request(url+"&s="+str(pagenum), callback=self.parse)    
+    def parse_shop(self, response):
+        print "*************response url:%s******************" %response.url
+        # nick = response.xpath('//a[@class="shop-name"]/span/text()').extract.endcode('UTF-8')
+        item = response.meta['item']
+        item['setupdate'] = response.xpath('//span[@class="id-time"]/text()').extract()[0].encode('UTF-8')
+        return item
+        # print 'setupdate = ' + item['setupdate']
+        # return item

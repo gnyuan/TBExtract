@@ -18,11 +18,7 @@ class RotateUserAgentMiddleware(UserAgentMiddleware):
     def process_request(self, request, spider):
         ua = random.choice(self.user_agent_list)
         if ua:
-            #显示当前使用的useragent
-            #print "********Current UserAgent:%s************" %ua
-
-            #记录
-            log.msg('Current UserAgent: '+ua, level=log.INFO)
+            # log.msg('Current UserAgent: '+ua, level=log.INFO)
             request.headers.setdefault('User-Agent', ua)
 
     #the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape

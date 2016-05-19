@@ -9,4 +9,5 @@ class TBExtractItem(Item):
     uid = Field()
     title = Field()
     shopUrl = Field()
+    setupdate = Field()
 
